@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<color name="primary">#1DA1F2</color>
+<color name="border">#E5E5E5</color>
+<color name="textFieldHint">#949C9E</color>
+</resources>
