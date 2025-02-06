@@ -8,6 +8,6 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   void onFabPressed(BuildContext context) {
-    context.go('/add-edit-employee');
+    context.push('/add-edit-employee');
   }
 }

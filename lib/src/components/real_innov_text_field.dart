@@ -5,16 +5,25 @@ import 'package:realtime_innovations_task/src/core/extension/padding_extension.d
 class RealInnovTexTField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
-  final Widget? prefix;
-  const RealInnovTexTField(
-      {super.key,
-      required this.controller,
-      required this.hintText,
-      this.prefix});
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final bool? readOnly;
+  final void Function()? onTap;
+  const RealInnovTexTField({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    this.prefixIcon,
+    this.readOnly,
+    this.suffixIcon,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      readOnly: readOnly ?? false,
       textAlignVertical: TextAlignVertical.center,
       controller: controller,
       decoration: InputDecoration(
@@ -25,8 +34,15 @@ class RealInnovTexTField extends StatelessWidget {
           fontWeight: FontWeight.w400,
         ),
         contentPadding: EdgeInsets.zero,
-        prefixIcon: prefix?.paddingOnly(top: 8, bottom: 8, left: 8, right: 12),
+        prefixIcon:
+            prefixIcon?.paddingOnly(top: 8, bottom: 8, left: 8, right: 12),
         prefixIconConstraints: BoxConstraints(
+          minHeight: 40,
+          minWidth: 24,
+        ),
+        suffixIcon:
+            suffixIcon?.paddingOnly(top: 8, bottom: 8, left: 12, right: 8),
+        suffixIconConstraints: BoxConstraints(
           minHeight: 40,
           minWidth: 24,
         ),

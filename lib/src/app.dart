@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:realtime_innovations_task/gen/colors.gen.dart';
 import 'package:realtime_innovations_task/src/core/routes/router.dart';
 import 'package:realtime_innovations_task/src/core/theme/app_bar_theme.dart';
 import 'package:realtime_innovations_task/src/features/home/presentation/cubit/home_cubit.dart';
@@ -63,14 +64,17 @@ class MyApp extends StatelessWidget {
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
-          theme: ThemeData(appBarTheme: appBarTheme),
+          theme: ThemeData(
+              appBarTheme: appBarTheme,
+              colorScheme: ColorScheme.light(primary: ColorName.primary),
+              primaryColor: ColorName.primary),
           darkTheme: ThemeData.dark(),
           themeMode: settingsController.themeMode,
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
 
-          routerConfig: router,
+          routerConfig: AppRouter.router,
         ),
       ),
     );

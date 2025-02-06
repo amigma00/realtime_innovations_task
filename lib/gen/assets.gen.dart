@@ -30,6 +30,18 @@ class $AssetsImagesGen {
 class $AssetsSvgsGen {
   const $AssetsSvgsGen();
 
+  /// File path: assets/svgs/arrow_drop_down.svg
+  SvgGenImage get arrowDropDown =>
+      const SvgGenImage('assets/svgs/arrow_drop_down.svg');
+
+  /// File path: assets/svgs/arrow_drop_down_left.svg
+  SvgGenImage get arrowDropDownLeft =>
+      const SvgGenImage('assets/svgs/arrow_drop_down_left.svg');
+
+  /// File path: assets/svgs/arrow_drop_down_right.svg
+  SvgGenImage get arrowDropDownRight =>
+      const SvgGenImage('assets/svgs/arrow_drop_down_right.svg');
+
   /// File path: assets/svgs/arrow_right.svg
   SvgGenImage get arrowRight =>
       const SvgGenImage('assets/svgs/arrow_right.svg');
@@ -45,7 +57,15 @@ class $AssetsSvgsGen {
   SvgGenImage get jobRole => const SvgGenImage('assets/svgs/job_role.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [arrowRight, calendar, employeeIcon, jobRole];
+  List<SvgGenImage> get values => [
+    arrowDropDown,
+    arrowDropDownLeft,
+    arrowDropDownRight,
+    arrowRight,
+    calendar,
+    employeeIcon,
+    jobRole,
+  ];
 }
 
 class Assets {

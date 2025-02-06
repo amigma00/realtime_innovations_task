@@ -16,8 +16,17 @@ class ColorName {
   /// Color: #E5E5E5
   static const Color border = Color(0xFFE5E5E5);
 
+  /// Color: #F2F2F2
+  static const Color dividerColor = Color(0xFFF2F2F2);
+
+  /// Color: #EDF8FF
+  static const Color lightBlue = Color(0xFFEDF8FF);
+
   /// Color: #1DA1F2
   static const Color primary = Color(0xFF1DA1F2);
+
+  /// Color: #323238
+  static const Color selectRoleFontColor = Color(0xFF323238);
 
   /// Color: #949C9E
   static const Color textFieldHint = Color(0xFF949C9E);
