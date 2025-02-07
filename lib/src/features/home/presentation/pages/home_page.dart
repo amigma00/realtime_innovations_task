@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:realtime_innovations_task/gen/assets.gen.dart';
-import 'package:realtime_innovations_task/gen/colors.gen.dart';
+import 'package:realtime_innovations_task/src/constants/app_colors.dart';
+import 'package:realtime_innovations_task/src/constants/app_images.dart';
+import 'package:realtime_innovations_task/src/core/extension/sizebox_extension.dart';
 import 'package:realtime_innovations_task/src/features/home/presentation/cubit/home_cubit.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return Scaffold(
+            backgroundColor: ColorName.dividerColor,
             appBar: AppBar(
               centerTitle: false,
               title: Text('Home Page'),
@@ -27,8 +29,13 @@ class HomePage extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            body: Center(
-              child: Assets.images.noEmployee.image(),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Image.asset(AppImages.noEmployee, height: 240, width: 260),
+                100.kheightBox
+              ],
             ));
       },
     );

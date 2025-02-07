@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:realtime_innovations_task/gen/colors.gen.dart';
+import 'package:realtime_innovations_task/src/constants/app_colors.dart';
 
 class SelectroleBottomSheet extends StatelessWidget {
   SelectroleBottomSheet({super.key});

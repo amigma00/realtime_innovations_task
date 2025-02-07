@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:realtime_innovations_task/gen/colors.gen.dart';
+import 'package:realtime_innovations_task/src/constants/app_colors.dart';
 
 // AppBarTheme appBarTheme(BuildContext context) {
 //   return AppBarTheme();
