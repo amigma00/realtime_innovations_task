@@ -20,7 +20,7 @@ const EmployeesSchema = CollectionSchema(
     r'endDate': PropertySchema(
       id: 0,
       name: r'endDate',
-      type: IsarType.string,
+      type: IsarType.dateTime,
     ),
     r'name': PropertySchema(
       id: 1,
@@ -35,7 +35,7 @@ const EmployeesSchema = CollectionSchema(
     r'startDate': PropertySchema(
       id: 3,
       name: r'startDate',
-      type: IsarType.string,
+      type: IsarType.dateTime,
     )
   },
   estimateSize: _employeesEstimateSize,
@@ -49,7 +49,7 @@ const EmployeesSchema = CollectionSchema(
   getId: _employeesGetId,
   getLinks: _employeesGetLinks,
   attach: _employeesAttach,
-  version: '3.1.0',
+  version: '3.1.0+1',
 );
 
 int _employeesEstimateSize(
@@ -59,12 +59,6 @@ int _employeesEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.endDate;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final value = object.name;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -72,12 +66,6 @@ int _employeesEstimateSize(
   }
   {
     final value = object.role;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.startDate;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -91,10 +79,10 @@ void _employeesSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.endDate);
+  writer.writeDateTime(offsets[0], object.endDate);
   writer.writeString(offsets[1], object.name);
   writer.writeString(offsets[2], object.role);
-  writer.writeString(offsets[3], object.startDate);
+  writer.writeDateTime(offsets[3], object.startDate);
 }
 
 Employees _employeesDeserialize(
@@ -104,10 +92,10 @@ Employees _employeesDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Employees(
-    endDate: reader.readStringOrNull(offsets[0]),
+    endDate: reader.readDateTimeOrNull(offsets[0]),
     name: reader.readStringOrNull(offsets[1]),
     role: reader.readStringOrNull(offsets[2]),
-    startDate: reader.readStringOrNull(offsets[3]),
+    startDate: reader.readDateTimeOrNull(offsets[3]),
   );
   object.dbId = id;
   return object;
@@ -121,20 +109,20 @@ P _employeesDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 Id _employeesGetId(Employees object) {
-  return object.dbId ?? Isar.autoIncrement;
+  return object.dbId;
 }
 
 List<IsarLinkBase<dynamic>> _employeesGetLinks(Employees object) {
@@ -225,24 +213,8 @@ extension EmployeesQueryWhere
 
 extension EmployeesQueryFilter
     on QueryBuilder<Employees, Employees, QFilterCondition> {
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> dbIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'dbId',
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> dbIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'dbId',
-      ));
-    });
-  }
-
   QueryBuilder<Employees, Employees, QAfterFilterCondition> dbIdEqualTo(
-      Id? value) {
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'dbId',
@@ -252,7 +224,7 @@ extension EmployeesQueryFilter
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> dbIdGreaterThan(
-    Id? value, {
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -265,7 +237,7 @@ extension EmployeesQueryFilter
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> dbIdLessThan(
-    Id? value, {
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -278,8 +250,8 @@ extension EmployeesQueryFilter
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> dbIdBetween(
-    Id? lower,
-    Id? upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -311,54 +283,46 @@ extension EmployeesQueryFilter
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'endDate',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateGreaterThan(
-    String? value, {
+    DateTime? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'endDate',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateLessThan(
-    String? value, {
+    DateTime? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'endDate',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateBetween(
-    String? lower,
-    String? upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -367,76 +331,6 @@ extension EmployeesQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'endDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'endDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'endDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'endDate',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> endDateIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'endDate',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition>
-      endDateIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'endDate',
-        value: '',
       ));
     });
   }
@@ -751,55 +645,47 @@ extension EmployeesQueryFilter
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'startDate',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition>
       startDateGreaterThan(
-    String? value, {
+    DateTime? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'startDate',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateLessThan(
-    String? value, {
+    DateTime? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'startDate',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateBetween(
-    String? lower,
-    String? upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -808,76 +694,6 @@ extension EmployeesQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'startDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'startDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'startDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'startDate',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition> startDateIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'startDate',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Employees, Employees, QAfterFilterCondition>
-      startDateIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'startDate',
-        value: '',
       ));
     });
   }
@@ -1004,10 +820,9 @@ extension EmployeesQuerySortThenBy
 
 extension EmployeesQueryWhereDistinct
     on QueryBuilder<Employees, Employees, QDistinct> {
-  QueryBuilder<Employees, Employees, QDistinct> distinctByEndDate(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Employees, Employees, QDistinct> distinctByEndDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'endDate', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'endDate');
     });
   }
 
@@ -1025,10 +840,9 @@ extension EmployeesQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Employees, Employees, QDistinct> distinctByStartDate(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Employees, Employees, QDistinct> distinctByStartDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'startDate', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'startDate');
     });
   }
 }
@@ -1041,7 +855,7 @@ extension EmployeesQueryProperty
     });
   }
 
-  QueryBuilder<Employees, String?, QQueryOperations> endDateProperty() {
+  QueryBuilder<Employees, DateTime?, QQueryOperations> endDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'endDate');
     });
@@ -1059,7 +873,7 @@ extension EmployeesQueryProperty
     });
   }
 
-  QueryBuilder<Employees, String?, QQueryOperations> startDateProperty() {
+  QueryBuilder<Employees, DateTime?, QQueryOperations> startDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'startDate');
     });

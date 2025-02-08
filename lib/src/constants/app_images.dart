@@ -11,4 +11,5 @@ class AppImages {
   static const String arrowRight = 'assets/svgs/arrow_right.svg';
   static const String calendar = 'assets/svgs/calendar.svg';
   static const String employeeIcon = 'assets/svgs/employee_icon.svg';
+  static const String delete = 'assets/svgs/delete.svg';
 }

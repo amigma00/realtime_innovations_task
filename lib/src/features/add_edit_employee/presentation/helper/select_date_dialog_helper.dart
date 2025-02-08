@@ -26,7 +26,6 @@ class SelectDateDialogHelper {
 
   static String getFormattedDate(DateTime? date) {
     var now = DateTime.now();
-
     return date == null
         ? 'No date'
         : DateTime(

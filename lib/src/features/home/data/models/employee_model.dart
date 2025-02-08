@@ -3,11 +3,11 @@ part 'employee_model.g.dart';
 
 @collection
 class Employees {
-  Id? dbId = Isar.autoIncrement;
+  Id dbId = Isar.autoIncrement;
   final String? name;
   final String? role;
-  final String? startDate;
-  final String? endDate;
+  final DateTime? startDate;
+  final DateTime? endDate;
 
   Employees({
     this.name,
@@ -19,8 +19,8 @@ class Employees {
   Employees copyWith({
     String? name,
     String? role,
-    String? startDate,
-    String? endDate,
+    DateTime? startDate,
+    DateTime? endDate,
   }) {
     return Employees(
       name: name ?? this.name,
@@ -33,8 +33,8 @@ class Employees {
   Employees.fromJson(Map<String, dynamic> json)
       : name = json['name'] as String?,
         role = json['role'] as String?,
-        startDate = json['start_date'] as String?,
-        endDate = json['end_date'] as String?;
+        startDate = json['start_date'] as DateTime?,
+        endDate = json['end_date'] as DateTime?;
 
   Map<String, dynamic> toJson() => {
         'name': name,

@@ -1,39 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:realtime_innovations_task/src/components/real_innov_button.dart';
 import 'package:realtime_innovations_task/src/components/real_innov_text_field.dart';
 import 'package:realtime_innovations_task/src/constants/app_colors.dart';
 import 'package:realtime_innovations_task/src/constants/app_images.dart';
+import 'package:realtime_innovations_task/src/core/di/service_locator.dart';
 
 import 'package:realtime_innovations_task/src/core/extension/padding_extension.dart';
 import 'package:realtime_innovations_task/src/core/extension/sizebox_extension.dart';
 import 'package:realtime_innovations_task/src/core/util/dialog_helper.dart';
 import 'package:realtime_innovations_task/src/features/add_edit_employee/presentation/cubit/add_edit_employee_cubit.dart';
+import 'package:realtime_innovations_task/src/features/home/data/models/employee_model.dart';
+import 'package:realtime_innovations_task/src/features/home/presentation/cubit/home_cubit.dart';
 
 class AddEditEmployeePage extends StatelessWidget {
-  const AddEditEmployeePage({super.key});
+  final Employees? employee;
+  const AddEditEmployeePage({super.key, this.employee});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = GetIt.I<AddEditEmployeeCubit>();
-    cubit.init();
+    return BlocProvider(
+      create: (context) => sl<AddEditEmployeeCubit>()..init(employee),
+      child: AddEditEmployeeView(
+        employee: employee,
+      ),
+    );
+  }
+}
+
+class AddEditEmployeeView extends StatelessWidget {
+  final Employees? employee;
+
+  const AddEditEmployeeView({super.key, this.employee});
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<AddEditEmployeeCubit>();
+
     return BlocListener<AddEditEmployeeCubit, AddEditEmployeeState>(
       bloc: cubit,
       listener: (context, state) {
-        if (state is AddEditEmployeeLoading) {
-          DialogHelper.showLoading(context);
-        } else if (state is AddEditEmployeeAdded) {
-          DialogHelper.hideDialog(context);
+        if (state is AddEditEmployeeAdded) {
+          // hideDialog(context);
           context.pop(true);
           const snackBar = SnackBar(
             content: Text('Employee added successfully!'),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+        if (state is AddEditEmployeeEditted) {
+          // hideDialog(context);
+          sl<HomeCubit>().getEmployees();
+          Navigator.of(context).pop('yes');
+
+          const snackBar = SnackBar(
+            content: Text('Employee editted successfully!'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else if (state is AddEditEmployeeFailed) {
-          DialogHelper.hideDialog(context);
+          // hideDialog(context);
           const snackBar = SnackBar(
             content: Text('Something went wrong!'),
           );
@@ -43,7 +71,9 @@ class AddEditEmployeePage extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            title: Text('Add Employee Details'),
+            title: Text(employee == null
+                ? 'Add Employee Details'
+                : 'Edit Employee Details'),
           ),
           body: Column(
             children: [
@@ -56,6 +86,8 @@ class AddEditEmployeePage extends StatelessWidget {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter employee name';
+                        } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+                          return 'Enter a proper name';
                         }
                         return null;
                       },

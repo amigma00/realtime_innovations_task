@@ -9,4 +9,6 @@ class AddEditEmployeeLoading extends AddEditEmployeeState {}
 
 class AddEditEmployeeAdded extends AddEditEmployeeState {}
 
+class AddEditEmployeeEditted extends AddEditEmployeeState {}
+
 class AddEditEmployeeFailed extends AddEditEmployeeState {}

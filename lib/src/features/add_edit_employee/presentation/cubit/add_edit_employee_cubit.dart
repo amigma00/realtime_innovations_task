@@ -17,7 +17,7 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
       : super(AddEditEmployeeInitial());
 
   GlobalKey<FormState> formKey = GlobalKey();
-
+  Employees? employee;
   TextEditingController empNameController = TextEditingController();
   TextEditingController roleController = TextEditingController();
   TextEditingController startDateController = TextEditingController();
@@ -36,7 +36,8 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
 
   void onDateWidgetTapped(BuildContext context,
       {required bool isStartDate}) async {
-    await showDialog(
+    await showDialog<DateTime>(
+      barrierDismissible: false,
       context: context,
       builder: (context) => SelectDateDialog(isStartDate: isStartDate),
     ).then(
@@ -48,9 +49,19 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
                 SelectDateDialogHelper.getFormattedDate(startDate);
           }
         } else {
-          endDate = value;
-          endDateController.text =
-              SelectDateDialogHelper.getFormattedDate(endDate);
+          if (value == null) {
+            return;
+          } else if (value.isAfter(startDate)) {
+            endDate = value;
+            endDateController.text =
+                SelectDateDialogHelper.getFormattedDate(endDate);
+          } else {
+            const snackBar = SnackBar(
+              backgroundColor: Colors.redAccent,
+              content: Text("End date can't be before Start date"),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         }
       },
     );
@@ -58,27 +69,60 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
 
   void onSaveTapped() async {
     if (formKey.currentState!.validate()) {
-      var employee = Employees(
-        endDate: endDate.toString(),
+      var emp = Employees(
+        endDate: endDate,
         name: empNameController.text,
         role: roleController.text,
-        startDate: startDate.toString(),
+        startDate: startDate,
       );
-      emit(AddEditEmployeeLoading());
-      final result = await getUsecase.addEmployee(employee);
+      if (employee != null) {
+        emp.dbId = employee!.dbId;
+      }
+      // emit(AddEditEmployeeLoading());
+      final result = await getUsecase.addEmployee(emp);
       result.fold(
         (l) {
           emit(AddEditEmployeeFailed());
         },
         (r) {
-          emit(AddEditEmployeeAdded());
+          if (employee == null) {
+            emit(AddEditEmployeeAdded());
+          } else {
+            emit(AddEditEmployeeEditted());
+          }
         },
       );
     }
   }
 
-  void init() {
-    startDate = DateTime.now();
-    startDateController.text = 'Today';
+  void init(Employees? emp) {
+    employee = emp;
+    if (employee == null) {
+      startDate = DateTime.now();
+      startDateController.text = 'Today';
+    } else {
+      setEmployee();
+    }
+  }
+
+  setEmployee() {
+    empNameController.text = employee?.name ?? '';
+    roleController.text = employee?.role ?? '';
+    startDate = employee?.startDate ?? DateTime.now();
+    if (endDate != null) endDate = employee?.endDate;
+    startDateController.text =
+        SelectDateDialogHelper.getFormattedDate(startDate);
+    endDateController.text = SelectDateDialogHelper.getFormattedDate(endDate);
+  }
+
+  @override
+  Future<void> close() {
+    // TODO: implement close
+
+    empNameController.dispose();
+    roleController.dispose();
+    startDateController.dispose();
+    endDateController.dispose();
+    return super.close();
   }
 }

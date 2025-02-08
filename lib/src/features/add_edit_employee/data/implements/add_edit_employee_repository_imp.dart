@@ -12,10 +12,9 @@ class AddEditEmployeeRepositoryImp implements AddEditEmployeeRepository {
   @override
   Future<Either<Failure, bool>> addUser(Employees employee) async {
     try {
-      await localDataSource.addUser(employee);
+      await localDataSource.addEmployee(employee);
       return Right(true);
     } catch (e) {
-    
       return Left(ServerFailure());
     }
   }
