@@ -49,6 +49,8 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
           }
         } else {
           endDate = value;
+          endDateController.text =
+              SelectDateDialogHelper.getFormattedDate(endDate);
         }
       },
     );
@@ -66,11 +68,9 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
       final result = await getUsecase.addEmployee(employee);
       result.fold(
         (l) {
-          
           emit(AddEditEmployeeFailed());
         },
         (r) {
-          
           emit(AddEditEmployeeAdded());
         },
       );
