@@ -231,14 +231,12 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
             Text(SelectDateDialogHelper.getFormattedDate(selectedDay)),
             const Spacer(),
             RealInnovButton(
-              width: 80.w,
               isDisabled: true,
               text: 'Cancel',
               onPressed: () => context.pop(),
             ),
             16.kwidthBox,
             RealInnovButton(
-              width: 80.w,
               text: 'Save',
               onPressed: () => context.pop(selectedDay),
             ),

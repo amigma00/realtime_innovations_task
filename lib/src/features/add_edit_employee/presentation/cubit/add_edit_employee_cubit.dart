@@ -109,7 +109,7 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
     empNameController.text = employee?.name ?? '';
     roleController.text = employee?.role ?? '';
     startDate = employee?.startDate ?? DateTime.now();
-    if (endDate != null) endDate = employee?.endDate;
+    if (employee?.endDate != null) endDate = employee?.endDate;
     startDateController.text =
         SelectDateDialogHelper.getFormattedDate(startDate);
     endDateController.text = SelectDateDialogHelper.getFormattedDate(endDate);

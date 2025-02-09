@@ -175,14 +175,12 @@ class AddEditEmployeeView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       RealInnovButton(
-                        width: 80.w,
                         isDisabled: true,
                         text: 'Cancel',
                         onPressed: () => context.pop(),
                       ),
                       16.kwidthBox,
                       RealInnovButton(
-                        width: 80.w,
                         text: 'Save',
                         onPressed: () => cubit.onSaveTapped(),
                       ),

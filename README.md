@@ -54,3 +54,9 @@ This project utilizes various Flutter packages to enhance state management, navi
 
 - **get_it**  
   A simple yet powerful service locator for managing dependencies and singleton instances throughout the application.
+
+## Responsive UI
+
+- **flutter_screenutil**  
+  A flutter plugin for adapting screen and font size.Let your UI display a reasonable layout on different screen sizes!
+  
