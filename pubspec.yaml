@@ -25,6 +25,7 @@ dependencies:
   isar_flutter_libs: *isar_version
   dartz:
   get_it:
+  flutter_screenutil:
 
 
 

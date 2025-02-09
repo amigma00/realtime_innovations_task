@@ -19,3 +19,4 @@ class HomeDeleted extends HomeState {
 }
 
 class HomeFailed extends HomeState {}
+

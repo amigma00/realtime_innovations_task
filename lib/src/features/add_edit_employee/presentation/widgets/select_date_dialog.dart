@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:realtime_innovations_task/src/components/real_innov_button.dart';
@@ -61,7 +62,6 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
           children: [
             Expanded(
               child: RealInnovButton(
-                width: 80,
                 isDisabled: !isToday,
                 text: 'Today',
                 onPressed: () {
@@ -76,7 +76,6 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
             Expanded(
               child: RealInnovButton(
                 isDisabled: !isNextMonday,
-                width: 80,
                 text: 'Next Monday',
                 onPressed: () {
                   setState(() {
@@ -93,7 +92,6 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
           children: [
             Expanded(
               child: RealInnovButton(
-                width: 80,
                 isDisabled: !isNextTuesday,
                 text: 'Next Tuesday',
                 onPressed: () {
@@ -108,7 +106,6 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
             Expanded(
               child: RealInnovButton(
                 isDisabled: !isNextWeek,
-                width: 80,
                 text: 'After 1 week',
                 onPressed: () {
                   setState(() {
@@ -130,7 +127,6 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
         Expanded(
           child: RealInnovButton(
             isDisabled: !isNoDate,
-            width: 80,
             text: 'No date',
             onPressed: () {
               setState(() {
@@ -143,7 +139,6 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
         16.kwidthBox,
         Expanded(
           child: RealInnovButton(
-            width: 80,
             isDisabled: !isToday,
             text: 'Today',
             onPressed: () {
@@ -236,14 +231,14 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
             Text(SelectDateDialogHelper.getFormattedDate(selectedDay)),
             const Spacer(),
             RealInnovButton(
-              width: 80,
+              width: 80.w,
               isDisabled: true,
               text: 'Cancel',
               onPressed: () => context.pop(),
             ),
             16.kwidthBox,
             RealInnovButton(
-              width: 80,
+              width: 80.w,
               text: 'Save',
               onPressed: () => context.pop(selectedDay),
             ),
@@ -252,7 +247,4 @@ class _SelectDateDialogState extends State<SelectDateDialog> {
       ],
     );
   }
-
-
-
 }

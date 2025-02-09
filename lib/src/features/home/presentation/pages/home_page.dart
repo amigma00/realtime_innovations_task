@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:realtime_innovations_task/src/constants/app_colors.dart';
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: ColorName.primary,
               child: Icon(
                 Icons.add,
-                size: 30,
+                size: 30.r,
                 color: Colors.white,
               ),
             ),
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Image.asset(AppImages.noEmployee, height: 240, width: 260),
+        Image.asset(AppImages.noEmployee, height: 240.h, width: 260.w),
         100.kheightBox
       ],
     );
@@ -101,7 +102,7 @@ class _HomePageState extends State<HomePage> {
               (emp.endDate?.isBefore(DateTime.now()) ?? false))
           .toList(),
     };
-    print(employeeMap);
+
     List<String> sectionTitles = employeeMap.keys.toList();
     return CustomScrollView(slivers: [
       for (var sectionTitle in sectionTitles)
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                   sectionTitle,
                   style: TextStyle(
                     color: ColorName.primary,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                   Dismissible(
                     onDismissed: (direction) async {
                       final item = emp;
-                      await cubit.deleteEmployee(emp.dbId ?? 0).then((value) {
+                      await cubit.deleteEmployee(emp.dbId).then((value) {
                         if (!value && mounted) {
                           context
                               .read<AddEditEmployeeCubit>()
@@ -162,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                             height: 1.5,
                             fontWeight: FontWeight.w500,
-                            fontSize: 16),
+                            fontSize: 16.sp),
                       ),
                       subtitle: Text.rich(
                         TextSpan(
@@ -172,14 +173,14 @@ class _HomePageState extends State<HomePage> {
                               style: TextStyle(
                                   height: 1.5,
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 14,
+                                  fontSize: 14.sp,
                                   color: ColorName.subTitle),
                             ),
                             TextSpan(
                               text: getFromToDate(emp.startDate, emp.endDate),
                               style: TextStyle(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   color: ColorName.subTitle),
                             ),
                           ],

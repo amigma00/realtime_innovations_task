@@ -14,7 +14,7 @@ import 'package:realtime_innovations_task/src/features/home/presentation/cubit/h
 
 final sl = GetIt.instance;
 
-void setupLocator() async {
+Future<void> setupLocator() async {
 //initialization
   final isar = await IsarService.init();
 

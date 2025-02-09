@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:realtime_innovations_task/src/constants/app_colors.dart';
 import 'package:realtime_innovations_task/src/core/extension/padding_extension.dart';
 
@@ -26,7 +27,7 @@ class RealInnovTexTField extends StatelessWidget {
     return TextFormField(
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator,
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+      style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
       onTap: onTap,
       readOnly: readOnly ?? false,
       textAlignVertical: TextAlignVertical.center,
@@ -38,7 +39,7 @@ class RealInnovTexTField extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           color: ColorName.textFieldHint,
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w400,
         ),
         contentPadding: EdgeInsets.zero,
@@ -58,7 +59,7 @@ class RealInnovTexTField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide: BorderSide(
-            color: ColorName.border,
+            color: ColorName.primary,
           ),
         ),
         focusedBorder: OutlineInputBorder(

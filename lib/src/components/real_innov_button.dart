@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:realtime_innovations_task/src/constants/app_colors.dart';
 
 class RealInnovButton extends StatelessWidget {
@@ -30,7 +31,7 @@ class RealInnovButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.bold,
               color: !isDisabled ? Colors.white : null),
         ),

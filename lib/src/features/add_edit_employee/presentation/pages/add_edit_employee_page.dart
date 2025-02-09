@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:go_router/go_router.dart';
@@ -11,7 +12,7 @@ import 'package:realtime_innovations_task/src/core/di/service_locator.dart';
 
 import 'package:realtime_innovations_task/src/core/extension/padding_extension.dart';
 import 'package:realtime_innovations_task/src/core/extension/sizebox_extension.dart';
-import 'package:realtime_innovations_task/src/core/util/dialog_helper.dart';
+
 import 'package:realtime_innovations_task/src/features/add_edit_employee/presentation/cubit/add_edit_employee_cubit.dart';
 import 'package:realtime_innovations_task/src/features/home/data/models/employee_model.dart';
 import 'package:realtime_innovations_task/src/features/home/presentation/cubit/home_cubit.dart';
@@ -174,14 +175,14 @@ class AddEditEmployeeView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       RealInnovButton(
-                        width: 80,
+                        width: 80.w,
                         isDisabled: true,
                         text: 'Cancel',
                         onPressed: () => context.pop(),
                       ),
                       16.kwidthBox,
                       RealInnovButton(
-                        width: 80,
+                        width: 80.w,
                         text: 'Save',
                         onPressed: () => cubit.onSaveTapped(),
                       ),
