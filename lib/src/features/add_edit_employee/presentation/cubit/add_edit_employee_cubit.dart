@@ -50,6 +50,8 @@ class AddEditEmployeeCubit extends Cubit<AddEditEmployeeState> {
           }
         } else {
           if (value == null) {
+            endDateController.text = '';
+            endDate = value;
             return;
           } else if (value.isAfter(startDate)) {
             endDate = value;
